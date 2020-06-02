@@ -8,7 +8,9 @@ const Header: React.FC = () => {
   return (
     <HeaderContent>
       <Content>
-        <img src={logoImage} alt="Bear Logo" />
+        <a href="/">
+          <img src={logoImage} alt="Bear Logo" />
+        </a>
         <BarSearch>
           <input placeholder="Search" />
           <button type="submit">

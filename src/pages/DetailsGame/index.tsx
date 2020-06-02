@@ -1,7 +1,15 @@
 import React from 'react';
-import { FiClock, FiPlus, FiCalendar, FiGrid } from 'react-icons/fi';
+import {
+  FiClock,
+  FiPlus,
+  FiCalendar,
+  FiGrid,
+  FiChevronRight,
+} from 'react-icons/fi';
 
 import Header from '../../components/Header';
+import Twitch from '../../assets/twitch.svg';
+import Alanzoka from '../../assets/alanzoka.png';
 import PSIcon from '../../assets/playstation.svg';
 import bloodborne from '../../assets/Bloodborne_Cover.jpg';
 import {
@@ -11,6 +19,10 @@ import {
   ContentDetails,
   Details,
   GenresList,
+  CardStream,
+  Streams,
+  ContainerChannel,
+  CardChannel,
 } from './styles';
 
 const DetailsGame: React.FC = () => {
@@ -73,6 +85,89 @@ const DetailsGame: React.FC = () => {
           </Details>
         </ContentDetails>
       </CardGame>
+      <CardStream>
+        <strong>Who are playing now:</strong>
+        <Streams>
+          <img src={Twitch} alt="Logo Twitch" />
+          <strong>On Twitch</strong>
+        </Streams>
+        <ContainerChannel>
+          <CardChannel>
+            <ul>
+              <li>
+                <div>
+                  <img src={Alanzoka} alt="Profile de alanzoka" />
+                  <div>
+                    <strong>Alanzoka</strong>
+                    <p>Today is not yesterday</p>
+                  </div>
+                </div>
+                <FiChevronRight size="24" />
+              </li>
+            </ul>
+          </CardChannel>
+
+          <CardChannel>
+            <ul>
+              <li>
+                <div>
+                  <img src={Alanzoka} alt="Profile de alanzoka" />
+                  <div>
+                    <strong>Alanzoka</strong>
+                    <p>Today is not yesterday</p>
+                  </div>
+                </div>
+                <FiChevronRight size="24" />
+              </li>
+            </ul>
+          </CardChannel>
+
+          <CardChannel>
+            <ul>
+              <li>
+                <div>
+                  <img src={Alanzoka} alt="Profile de alanzoka" />
+                  <div>
+                    <strong>Alanzoka</strong>
+                    <p>Today is not yesterday</p>
+                  </div>
+                </div>
+                <FiChevronRight size="24" />
+              </li>
+            </ul>
+          </CardChannel>
+
+          <CardChannel>
+            <ul>
+              <li>
+                <div>
+                  <img src={Alanzoka} alt="Profile de alanzoka" />
+                  <div>
+                    <strong>Alanzoka</strong>
+                    <p>Today is not yesterday</p>
+                  </div>
+                </div>
+                <FiChevronRight size="24" />
+              </li>
+            </ul>
+          </CardChannel>
+
+          <CardChannel>
+            <ul>
+              <li>
+                <div>
+                  <img src={Alanzoka} alt="Profile de alanzoka" />
+                  <div>
+                    <strong>Alanzoka</strong>
+                    <p>Today is not yesterday</p>
+                  </div>
+                </div>
+                <FiChevronRight size="24" />
+              </li>
+            </ul>
+          </CardChannel>
+        </ContainerChannel>
+      </CardStream>
     </>
   );
 };
