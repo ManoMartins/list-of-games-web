@@ -1,27 +1,28 @@
 import React from 'react';
-import { FiSearch, FiMenu } from 'react-icons/fi';
 
-import logoImage from '../../assets/logo.svg';
-import { HeaderContent, Content, BarSearch } from './styles';
+import { FaSearch, FaPlus } from 'react-icons/fa';
+import { Container, Content, BarSearch } from './styles';
 
 const Header: React.FC = () => {
   return (
-    <HeaderContent>
+    <Container>
       <Content>
         <a href="/">
-          <img src={logoImage} alt="Bear Logo" />
+          <img src="" alt="Acrux" />
         </a>
+
         <BarSearch>
-          <input placeholder="Search" />
+          <input placeholder="Find a game" />
           <button type="submit">
-            <FiSearch size="24" />
+            <FaSearch />
           </button>
         </BarSearch>
         <button type="button">
-          <FiMenu size="24" />
+          <FaPlus />
+          <span>New Game</span>
         </button>
       </Content>
-    </HeaderContent>
+    </Container>
   );
 };
 

@@ -10,10 +10,18 @@ export default createGlobalStyle`
 
   body {
     --webkit-font-smoothing: antialiased;
+    background: #181818;
+    color: #efeff1;
+  }
+
+  ul {
+    list-style: none;
   }
 
   body, input, button {
-    font: 16px sans-serif;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    color: #efeff1;
   }
 
   button {
