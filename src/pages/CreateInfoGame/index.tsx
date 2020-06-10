@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent, ChangeEvent } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import api from '../../services/api';
 import {
@@ -7,6 +8,7 @@ import {
   Field,
   Fieldset,
   FieldTime,
+  DescriptionPosition,
   CardGenre,
   CardPlatform,
   ListCardSelect,
@@ -32,7 +34,19 @@ const CreateInfoGame: React.FC = () => {
   const [selectedPlatform, setSelectedPlatform] = useState<number[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [genres, setGenres] = useState<IGenre[]>([]);
+  const [description, setDescription] = useState('');
+  const [descriptionLength, setDescriptionLength] = useState(0);
   const [platforms, setPlatforms] = useState<IPlatform[]>([]);
+  const [formData, setFormData] = useState({
+    title: '',
+    release: '',
+    main_story_hours: 0,
+    main_story_minutes: 0,
+    main_extra_hours: 0,
+    main_extra_minutes: 0,
+  });
+
+  const history = useHistory();
 
   const [selectedFile, setSelectedFile] = useState<File>();
 
@@ -65,13 +79,58 @@ const CreateInfoGame: React.FC = () => {
     });
   }, []);
 
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  }
+
+  function handleDescriptionChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    setDescriptionLength(event.target.value.length);
+    setDescription(event.target.value);
+  }
+
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+
+    const {
+      title,
+      release,
+      main_extra_hours,
+      main_extra_minutes,
+      main_story_hours,
+      main_story_minutes,
+    } = formData;
+    const platform = selectedPlatform;
+    const genre = selectedGenres;
+
+    const data = new FormData();
+
+    data.append('title', title);
+    data.append('release', release);
+    data.append('main_extra_hours', String(main_extra_hours));
+    data.append('main_extra_minutes', String(main_extra_minutes));
+    data.append('main_story_hours', String(main_story_hours));
+    data.append('main_story_minutes', String(main_story_minutes));
+    data.append('description', description);
+    data.append('platform', platform.join(','));
+    data.append('genre', genre.join(','));
+
+    if (selectedFile) {
+      data.append('image', selectedFile);
+    }
+
+    await api.post('info-game', data);
+
+    history.push('/');
+  }
+
   return (
     <>
       <Header />
       <Container>
         <Content>
           <Dropzone onFileUploaded={setSelectedFile} />
-          <form>
+          <form onSubmit={handleSubmit}>
             <Fieldset>
               <legend>
                 <h2>Info of game</h2>
@@ -83,6 +142,7 @@ const CreateInfoGame: React.FC = () => {
                   type="date"
                   name="release"
                   placeholder="Date of release"
+                  onChange={handleInputChange}
                 />
               </Field>
             </Fieldset>
@@ -96,31 +156,37 @@ const CreateInfoGame: React.FC = () => {
                 <FieldTime>
                   <label htmlFor="main_story">Main Story</label>
                   <input
-                    name="main_story"
+                    name="main_story_hours"
                     type="number"
                     min="0"
                     placeholder="Hours"
+                    onChange={handleInputChange}
                   />
                   <input
-                    name="main_story"
+                    name="main_story_minutes"
                     type="number"
                     min="0"
+                    max="59"
                     placeholder="Minutes"
+                    onChange={handleInputChange}
                   />
                 </FieldTime>
                 <FieldTime>
                   <label htmlFor="main_extra">Main + Extra</label>
                   <input
-                    name="main_extra"
+                    name="main_extra_hours"
                     type="number"
                     min="0"
                     placeholder="Hours"
+                    onChange={handleInputChange}
                   />
                   <input
-                    name="main_extra"
+                    name="main_extra_minutes"
                     type="number"
                     min="0"
+                    max="59"
                     placeholder="Minutes"
+                    onChange={handleInputChange}
                   />
                 </FieldTime>
               </FieldGroup>
@@ -171,11 +237,30 @@ const CreateInfoGame: React.FC = () => {
                 <h2>Description</h2>
               </legend>
 
-              <textarea
-                name="description"
-                placeholder="Type a description with max 255 caracteres"
-              />
+              <DescriptionPosition>
+                <textarea
+                  name="description"
+                  placeholder="Type a description"
+                  onChange={handleDescriptionChange}
+                  maxLength={280}
+                  value={description}
+                />
+                <div>
+                  <p>
+                    {descriptionLength < 10
+                      ? `00${descriptionLength}`
+                      : descriptionLength < 100
+                      ? `0${descriptionLength}`
+                      : descriptionLength}
+                    /280
+                  </p>
+                </div>
+              </DescriptionPosition>
             </Fieldset>
+
+            <div>
+              <button type="submit">Enviar</button>
+            </div>
           </form>
         </Content>
       </Container>
