@@ -16,7 +16,7 @@ export const Content = styled.header`
   max-width: 1000px;
   margin: 0 auto;
 
-  button {
+  > button {
     border: 0;
     height: 32px;
     padding: 10px;
@@ -54,7 +54,7 @@ export const BarSearch = styled.div`
     }
 
     &:focus {
-      border: 2px solid #393b5a;
+      border: 2px solid #0074d9;
       border-right: 0;
       background: black;
     }
@@ -67,11 +67,14 @@ export const BarSearch = styled.div`
     background: #4f4f4f;
     color: #ffffff;
     border-radius: 0 6px 6px 0;
-    transition: background-color 0.2s;
+    transition: background-color 300ms;
     margin: 0 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
-      background: ${shade(0.2, '#4f4f4f')};
+      background: ${shade(0.3, '#4f4f4f')};
     }
   }
 `;
